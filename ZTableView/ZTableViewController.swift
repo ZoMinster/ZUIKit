@@ -10,9 +10,13 @@ import UIKit
 internal let zCellID = "z.cell.id.default"
 
 
-internal class ZTableViewController: NSObject, ZTableViewDelegate {
+internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDelegate, UITableViewDragDelegate, UITableViewDropDelegate, UITableViewDataSource {
     
-    weak var delegate: ZTableViewDelegate?
+    weak var zDelegate: ZTableViewDelegate?
+    weak var delegate: (any UITableViewDelegate)?
+    weak var dataSource: (any UITableViewDataSource)?
+    weak var dragDelegate: (any UITableViewDragDelegate)?
+    weak var dropDelegate: (any UITableViewDropDelegate)?
     weak var tableView: ZTableView?
     var hasSectionHeader: Bool = false
     var parentNodeDic = [String:ZTableViewNodeProtocol]()
@@ -124,7 +128,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate {
         if (self.tableView!.autoSolveDataSource) {
             return showingDatas[section].children.count
         }
-        guard let rows = delegate?.tableView?(tableView, numberOfRowsInSection: section) else {
+        guard let rows = dataSource?.tableView(tableView, numberOfRowsInSection: section) else {
             return 0
         }
         return rows
@@ -136,7 +140,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate {
     
     @available(iOS 8.0, *)
     internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = delegate?.tableView?(tableView, cellForRowAt: indexPath) else {
+        guard let cell = dataSource?.tableView(tableView, cellForRowAt: indexPath) else {
             return tableView.dequeueReusableCell(withIdentifier: zCellID, for: indexPath)
         }
         return cell
@@ -149,7 +153,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate {
         if (self.tableView!.autoSolveDataSource) {
             return showingDatas.count
         }
-        guard let sections = delegate?.numberOfSections?(in: tableView) else {
+        guard let sections = dataSource?.numberOfSections?(in: tableView) else {
             return 1
         }
         return sections
@@ -159,7 +163,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate {
     @available(iOS 2.0, *)
     internal func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         // fixed font style. use custom view (UILabel) if you want something different
-        guard let title = delegate?.tableView?(tableView, titleForHeaderInSection: section) else {
+        guard let title = dataSource?.tableView?(tableView, titleForHeaderInSection: section) else {
             if hasSectionHeader {
                 return showingDatas[section].key
             } else {
@@ -171,7 +175,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate {
     
     @available(iOS 2.0, *)
     internal func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        guard let title = delegate?.tableView?(tableView, titleForFooterInSection: section) else {
+        guard let title = dataSource?.tableView?(tableView, titleForFooterInSection: section) else {
             return showingDatas[section].footerTitle
         }
         return title
@@ -183,7 +187,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate {
     // Individual rows can opt out of having the -editing property set for them. If not implemented, all rows are assumed to be editable.
     @available(iOS 8.0, *)
     internal func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        guard let flag = delegate?.tableView?(tableView, canEditRowAt: indexPath) else {
+        guard let flag = dataSource?.tableView?(tableView, canEditRowAt: indexPath) else {
             return false
         }
         return flag
@@ -195,7 +199,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate {
         // Allows the reorder accessory view to internally be shown for a particular row. By default, the reorder control will be shown only if the datasource implements -tableView:moveRowAtIndexPath:toIndexPath:
     @available(iOS 8.0, *)
     internal func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        guard let flag = delegate?.tableView?(tableView, canMoveRowAt: indexPath) else {
+        guard let flag = dataSource?.tableView?(tableView, canMoveRowAt: indexPath) else {
             return false
         }
         return flag
@@ -207,7 +211,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate {
     @available(iOS 2.0, *)
     internal func sectionIndexTitles(for tableView: UITableView) -> [String]? {
         // return list of section titles to display in section index view (e.g. "ABCD...Z#")
-        guard let titles = delegate?.sectionIndexTitles?(for: tableView) else {
+        guard let titles = dataSource?.sectionIndexTitles?(for: tableView) else {
             return showingDatas.map({$0.key})
         }
         return titles
@@ -216,7 +220,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate {
     @available(iOS 2.0, *)
     internal func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
         // tell table which section corresponds to section title/index (e.g. "B",1))
-        guard let section = delegate?.tableView?(tableView, sectionForSectionIndexTitle:title, at:index) else {
+        guard let section = dataSource?.tableView?(tableView, sectionForSectionIndexTitle:title, at:index) else {
             return index
         }
         return section
@@ -229,14 +233,14 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate {
     // Not called for edit actions using UITableViewRowAction - the action's handler will be invoked instead
     @available(iOS 8.0, *)
     internal func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        delegate?.tableView?(tableView, commit:editingStyle, forRowAt: indexPath)
+        dataSource?.tableView?(tableView, commit:editingStyle, forRowAt: indexPath)
     }
     
     
     // Data manipulation - reorder / moving support
     @available(iOS 8.0, *)
     internal func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        delegate?.tableView?(tableView, moveRowAt:sourceIndexPath, to: destinationIndexPath)
+        dataSource?.tableView?(tableView, moveRowAt:sourceIndexPath, to: destinationIndexPath)
     }
     
     // MARK: tableview scroll delegate
@@ -724,7 +728,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate {
     // If an empty array is returned a drag session will not begin.
     @available(iOS 11.0, *)
     internal func tableView(_ tableView: UITableView, itemsForBeginning session: any UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        guard let items = delegate?.tableView?(tableView, itemsForBeginning: session, at: indexPath) else {
+        guard let items = dragDelegate?.tableView(tableView, itemsForBeginning: session, at: indexPath) else {
             return []
         }
         return items
@@ -736,7 +740,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate {
     // If not implemented, or if an empty array is returned, no items will be added to the drag and the gesture
     // will be handled normally.
     internal func tableView(_ tableView: UITableView, itemsForAddingTo session: any UIDragSession, at indexPath: IndexPath, point: CGPoint) -> [UIDragItem] {
-        guard let items = delegate?.tableView?(tableView, itemsForAddingTo: session, at: indexPath, point: point) else {
+        guard let items = dragDelegate?.tableView?(tableView, itemsForAddingTo: session, at: indexPath, point: point) else {
             return []
         }
         return items
@@ -746,27 +750,27 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate {
     // Allows customization of the preview used for the row when it is lifted or if the drag cancels.
     // If not implemented or if nil is returned, the entire cell will be used for the preview.
     internal func tableView(_ tableView: UITableView, dragPreviewParametersForRowAt indexPath: IndexPath) -> UIDragPreviewParameters? {
-        return delegate?.tableView?(tableView, dragPreviewParametersForRowAt: indexPath)
+        return dragDelegate?.tableView?(tableView, dragPreviewParametersForRowAt: indexPath)
     }
     
     
     // Called after the lift animation has completed to signal the start of a drag session.
     // This call will always be balanced with a corresponding call to -tableView:dragSessionDidEnd:
     internal func tableView(_ tableView: UITableView, dragSessionWillBegin session: any UIDragSession) {
-        delegate?.tableView?(tableView, dragSessionWillBegin: session)
+        dragDelegate?.tableView?(tableView, dragSessionWillBegin: session)
     }
     
     
     // Called to signal the end of the drag session.
     internal func tableView(_ tableView: UITableView, dragSessionDidEnd session: any UIDragSession) {
-        delegate?.tableView?(tableView, dragSessionDidEnd: session)
+        dragDelegate?.tableView?(tableView, dragSessionDidEnd: session)
     }
     
     
     // Controls whether move operations are allowed for the drag session.
     // If not implemented, defaults to YES.
     internal func tableView(_ tableView: UITableView, dragSessionAllowsMoveOperation session: any UIDragSession) -> Bool {
-        guard let flag = delegate?.tableView?(tableView, dragSessionAllowsMoveOperation: session) else {
+        guard let flag = dragDelegate?.tableView?(tableView, dragSessionAllowsMoveOperation: session) else {
             return true
         }
         return flag
@@ -776,7 +780,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate {
     // Controls whether the drag session is restricted to the source application.
     // If not implemented, defaults to NO.
     internal func tableView(_ tableView: UITableView, dragSessionIsRestrictedToDraggingApplication session: any UIDragSession) -> Bool {
-        guard let flag = delegate?.tableView?(tableView, dragSessionIsRestrictedToDraggingApplication: session) else {
+        guard let flag = dragDelegate?.tableView?(tableView, dragSessionIsRestrictedToDraggingApplication: session) else {
             return false
         }
         return flag
@@ -788,14 +792,14 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate {
     // If your implementation of this method does nothing, default drop animations will be supplied and the table view will
     // revert back to its initial state before the drop session entered.
     internal func tableView(_ tableView: UITableView, performDropWith coordinator: any UITableViewDropCoordinator) {
-        delegate?.tableView?(tableView, performDropWith: coordinator)
+        dropDelegate?.tableView(tableView, performDropWith: coordinator)
     }
     
     
     // If NO is returned no further delegate methods will be called for this drop session.
     // If not implemented, a default value of YES is assumed.
     internal func tableView(_ tableView: UITableView, canHandle session: any UIDropSession) -> Bool {
-        guard let flag = delegate?.tableView?(tableView, canHandle: session) else {
+        guard let flag = dropDelegate?.tableView?(tableView, canHandle: session) else {
             return false
         }
         return flag
@@ -804,7 +808,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate {
     
     // Called when the drop session begins tracking in the table view's coordinate space.
     internal func tableView(_ tableView: UITableView, dropSessionDidEnter session: any UIDropSession) {
-        delegate?.tableView?(tableView, dropSessionDidEnter: session)
+        dropDelegate?.tableView?(tableView, dropSessionDidEnter: session)
     }
     
     
@@ -815,7 +819,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate {
     // Note that in some cases your proposal may not be allowed and the system will enforce a different proposal.
     // You may perform your own hit testing via -[session locationInView:]
     internal func tableView(_ tableView: UITableView, dropSessionDidUpdate session: any UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
-        guard let proposal = delegate?.tableView?(tableView, dropSessionDidUpdate: session, withDestinationIndexPath: destinationIndexPath) else {
+        guard let proposal = dropDelegate?.tableView?(tableView, dropSessionDidUpdate: session, withDestinationIndexPath: destinationIndexPath) else {
             return UITableViewDropProposal(operation: .cancel)
         }
         return proposal
@@ -824,20 +828,20 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate {
     
     // Called when the drop session is no longer being tracked inside the table view's coordinate space.
     internal func tableView(_ tableView: UITableView, dropSessionDidExit session: any UIDropSession) {
-        delegate?.tableView?(tableView, dropSessionDidExit: session)
+        dropDelegate?.tableView?(tableView, dropSessionDidExit: session)
     }
     
     
     // Called when the drop session completed, regardless of outcome. Useful for performing any cleanup.
     internal func tableView(_ tableView: UITableView, dropSessionDidEnd session: any UIDropSession) {
-        delegate?.tableView?(tableView, dropSessionDidEnd: session)
+        dropDelegate?.tableView?(tableView, dropSessionDidEnd: session)
     }
     
     
     // Allows customization of the preview used when dropping to a newly inserted row.
     // If not implemented or if nil is returned, the entire cell will be used for the preview.
     internal func tableView(_ tableView: UITableView, dropPreviewParametersForRowAt indexPath: IndexPath) -> UIDragPreviewParameters? {
-        return delegate?.tableView?(tableView, dropPreviewParametersForRowAt: indexPath)
+        return dropDelegate?.tableView?(tableView, dropPreviewParametersForRowAt: indexPath)
     }
     
     

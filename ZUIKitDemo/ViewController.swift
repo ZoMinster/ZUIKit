@@ -8,7 +8,7 @@
 import UIKit
 import ZUIKit
 
-class ViewController: UIViewController, ZTableViewDelegate {
+class ViewController: UIViewController, ZTableViewDelegate, UITableViewDataSource, UITableViewDelegate, UITableViewDragDelegate, UITableViewDropDelegate {
     func tableView(_ tableView: UITableView, itemsForBeginning session: any UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         return []
     }
@@ -54,6 +54,8 @@ class ViewController: UIViewController, ZTableViewDelegate {
         }
         tableView.datas = datas
         tableView.delegate = self
+        tableView.dataSource = self
+        
     }
     
     

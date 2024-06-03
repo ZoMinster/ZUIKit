@@ -7,7 +7,7 @@
 
 import UIKit
 
-@objc public protocol ZTableViewDelegate : UITableViewDelegate, UITableViewDragDelegate, UITableViewDropDelegate, UITableViewDataSource {
+@objc public protocol ZTableViewDelegate {
     //data source
 
 //    @objc optional func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int

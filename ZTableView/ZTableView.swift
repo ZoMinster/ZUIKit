@@ -24,11 +24,27 @@ open class ZTableView: UITableView {
     open var autoSolveDataSource: Bool = true
     open weak var zDelegate: ZTableViewDelegate? {
         didSet {
-            controller.delegate = self.zDelegate
-            self.delegate = controller
-            self.dataSource = controller
-            self.dragDelegate = controller
-            self.dropDelegate = controller
+            controller.zDelegate = self.zDelegate
+        }
+    }
+    open weak override var delegate: (any UITableViewDelegate)? {
+        didSet {
+            controller.delegate = self.delegate
+        }
+    }
+    open weak override var dataSource: (any UITableViewDataSource)? {
+        didSet {
+            controller.dataSource = self.dataSource
+        }
+    }
+    open weak override var dragDelegate: (any UITableViewDragDelegate)? {
+        didSet {
+            controller.dragDelegate = self.dragDelegate
+        }
+    }
+    open weak override var dropDelegate: (any UITableViewDropDelegate)? {
+        didSet {
+            controller.dropDelegate = self.dropDelegate
         }
     }
     
