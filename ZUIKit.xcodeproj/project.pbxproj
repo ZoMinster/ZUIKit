@@ -11,6 +11,12 @@
 		7036E6002C0DBEED004CBFB7 /* ZUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7036E5F52C0DBEED004CBFB7 /* ZUIKit.framework */; };
 		7036E6052C0DBEED004CBFB7 /* ZUIKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7036E6042C0DBEED004CBFB7 /* ZUIKitTests.swift */; };
 		7036E6062C0DBEED004CBFB7 /* ZUIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 7036E5F82C0DBEED004CBFB7 /* ZUIKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7036E6162C0DBF89004CBFB7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7036E6152C0DBF89004CBFB7 /* AppDelegate.swift */; };
+		7036E6182C0DBF89004CBFB7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7036E6172C0DBF89004CBFB7 /* SceneDelegate.swift */; };
+		7036E61A2C0DBF89004CBFB7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7036E6192C0DBF89004CBFB7 /* ViewController.swift */; };
+		7036E61D2C0DBF89004CBFB7 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 7036E61C2C0DBF89004CBFB7 /* Base */; };
+		7036E61F2C0DBF8A004CBFB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7036E61E2C0DBF8A004CBFB7 /* Assets.xcassets */; };
+		7036E6222C0DBF8A004CBFB7 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 7036E6212C0DBF8A004CBFB7 /* Base */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +35,14 @@
 		7036E5F92C0DBEED004CBFB7 /* ZUIKit.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = ZUIKit.docc; sourceTree = "<group>"; };
 		7036E5FF2C0DBEED004CBFB7 /* ZUIKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZUIKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7036E6042C0DBEED004CBFB7 /* ZUIKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZUIKitTests.swift; sourceTree = "<group>"; };
+		7036E6132C0DBF89004CBFB7 /* ZUIKitDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZUIKitDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7036E6152C0DBF89004CBFB7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		7036E6172C0DBF89004CBFB7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		7036E6192C0DBF89004CBFB7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		7036E61C2C0DBF89004CBFB7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		7036E61E2C0DBF8A004CBFB7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7036E6212C0DBF8A004CBFB7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		7036E6232C0DBF8A004CBFB7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +61,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7036E6102C0DBF89004CBFB7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -55,6 +76,7 @@
 			children = (
 				7036E5F72C0DBEED004CBFB7 /* ZUIKit */,
 				7036E6032C0DBEED004CBFB7 /* ZUIKitTests */,
+				7036E6142C0DBF89004CBFB7 /* ZUIKitDemo */,
 				7036E5F62C0DBEED004CBFB7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -64,6 +86,7 @@
 			children = (
 				7036E5F52C0DBEED004CBFB7 /* ZUIKit.framework */,
 				7036E5FF2C0DBEED004CBFB7 /* ZUIKitTests.xctest */,
+				7036E6132C0DBF89004CBFB7 /* ZUIKitDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -83,6 +106,20 @@
 				7036E6042C0DBEED004CBFB7 /* ZUIKitTests.swift */,
 			);
 			path = ZUIKitTests;
+			sourceTree = "<group>";
+		};
+		7036E6142C0DBF89004CBFB7 /* ZUIKitDemo */ = {
+			isa = PBXGroup;
+			children = (
+				7036E6152C0DBF89004CBFB7 /* AppDelegate.swift */,
+				7036E6172C0DBF89004CBFB7 /* SceneDelegate.swift */,
+				7036E6192C0DBF89004CBFB7 /* ViewController.swift */,
+				7036E61B2C0DBF89004CBFB7 /* Main.storyboard */,
+				7036E61E2C0DBF8A004CBFB7 /* Assets.xcassets */,
+				7036E6202C0DBF8A004CBFB7 /* LaunchScreen.storyboard */,
+				7036E6232C0DBF8A004CBFB7 /* Info.plist */,
+			);
+			path = ZUIKitDemo;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -135,6 +172,23 @@
 			productReference = 7036E5FF2C0DBEED004CBFB7 /* ZUIKitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		7036E6122C0DBF89004CBFB7 /* ZUIKitDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7036E6242C0DBF8A004CBFB7 /* Build configuration list for PBXNativeTarget "ZUIKitDemo" */;
+			buildPhases = (
+				7036E60F2C0DBF89004CBFB7 /* Sources */,
+				7036E6102C0DBF89004CBFB7 /* Frameworks */,
+				7036E6112C0DBF89004CBFB7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ZUIKitDemo;
+			productName = ZUIKitDemo;
+			productReference = 7036E6132C0DBF89004CBFB7 /* ZUIKitDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -149,6 +203,9 @@
 						CreatedOnToolsVersion = 15.4;
 					};
 					7036E5FE2C0DBEED004CBFB7 = {
+						CreatedOnToolsVersion = 15.4;
+					};
+					7036E6122C0DBF89004CBFB7 = {
 						CreatedOnToolsVersion = 15.4;
 					};
 				};
@@ -168,6 +225,7 @@
 			targets = (
 				7036E5F42C0DBEED004CBFB7 /* ZUIKit */,
 				7036E5FE2C0DBEED004CBFB7 /* ZUIKitTests */,
+				7036E6122C0DBF89004CBFB7 /* ZUIKitDemo */,
 			);
 		};
 /* End PBXProject section */
@@ -184,6 +242,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7036E6112C0DBF89004CBFB7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7036E61F2C0DBF8A004CBFB7 /* Assets.xcassets in Resources */,
+				7036E6222C0DBF8A004CBFB7 /* Base in Resources */,
+				7036E61D2C0DBF89004CBFB7 /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,6 +274,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7036E60F2C0DBF89004CBFB7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7036E61A2C0DBF89004CBFB7 /* ViewController.swift in Sources */,
+				7036E6162C0DBF89004CBFB7 /* AppDelegate.swift in Sources */,
+				7036E6182C0DBF89004CBFB7 /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -215,6 +293,25 @@
 			targetProxy = 7036E6012C0DBEED004CBFB7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		7036E61B2C0DBF89004CBFB7 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7036E61C2C0DBF89004CBFB7 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		7036E6202C0DBF8A004CBFB7 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7036E6212C0DBF8A004CBFB7 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		7036E6072C0DBEED004CBFB7 /* Debug */ = {
@@ -461,6 +558,67 @@
 			};
 			name = Release;
 		};
+		7036E6252C0DBF8A004CBFB7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HYFTBH4WLL;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ZUIKitDemo/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.z.ZUIKitDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7036E6262C0DBF8A004CBFB7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HYFTBH4WLL;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ZUIKitDemo/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.z.ZUIKitDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -487,6 +645,15 @@
 			buildConfigurations = (
 				7036E60D2C0DBEED004CBFB7 /* Debug */,
 				7036E60E2C0DBEED004CBFB7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7036E6242C0DBF8A004CBFB7 /* Build configuration list for PBXNativeTarget "ZUIKitDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7036E6252C0DBF8A004CBFB7 /* Debug */,
+				7036E6262C0DBF8A004CBFB7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
