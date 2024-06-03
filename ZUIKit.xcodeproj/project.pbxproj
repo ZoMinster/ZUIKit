@@ -24,6 +24,7 @@
 		7036E6322C0DC142004CBFB7 /* ZUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7036E5F52C0DBEED004CBFB7 /* ZUIKit.framework */; };
 		7036E6332C0DC142004CBFB7 /* ZUIKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7036E5F52C0DBEED004CBFB7 /* ZUIKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7036E6382C0DC173004CBFB7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7036E6372C0DC173004CBFB7 /* UIKit.framework */; platformFilter = ios; };
+		7036E63A2C0DC4A7004CBFB7 /* CellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7036E6392C0DC4A7004CBFB7 /* CellModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 		7036E62D2C0DC0F2004CBFB7 /* ZTableViewNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZTableViewNode.swift; sourceTree = "<group>"; };
 		7036E62F2C0DC0F9004CBFB7 /* ZTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZTableView.swift; sourceTree = "<group>"; };
 		7036E6372C0DC173004CBFB7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS17.5.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		7036E6392C0DC4A7004CBFB7 /* CellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +157,7 @@
 				7036E61E2C0DBF8A004CBFB7 /* Assets.xcassets */,
 				7036E6202C0DBF8A004CBFB7 /* LaunchScreen.storyboard */,
 				7036E6232C0DBF8A004CBFB7 /* Info.plist */,
+				7036E6392C0DC4A7004CBFB7 /* CellModel.swift */,
 			);
 			path = ZUIKitDemo;
 			sourceTree = "<group>";
@@ -343,6 +346,7 @@
 				7036E61A2C0DBF89004CBFB7 /* ViewController.swift in Sources */,
 				7036E6162C0DBF89004CBFB7 /* AppDelegate.swift in Sources */,
 				7036E6182C0DBF89004CBFB7 /* SceneDelegate.swift in Sources */,
+				7036E63A2C0DC4A7004CBFB7 /* CellModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
