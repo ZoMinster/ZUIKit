@@ -25,6 +25,7 @@
 		7036E6332C0DC142004CBFB7 /* ZUIKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7036E5F52C0DBEED004CBFB7 /* ZUIKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7036E6382C0DC173004CBFB7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7036E6372C0DC173004CBFB7 /* UIKit.framework */; platformFilter = ios; };
 		7036E63A2C0DC4A7004CBFB7 /* CellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7036E6392C0DC4A7004CBFB7 /* CellModel.swift */; };
+		7036E63D2C0F399D004CBFB7 /* ZTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7036E63B2C0F3932004CBFB7 /* ZTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,7 @@
 		7036E62F2C0DC0F9004CBFB7 /* ZTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZTableView.swift; sourceTree = "<group>"; };
 		7036E6372C0DC173004CBFB7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS17.5.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		7036E6392C0DC4A7004CBFB7 /* CellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellModel.swift; sourceTree = "<group>"; };
+		7036E63B2C0F3932004CBFB7 /* ZTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +171,7 @@
 				7036E62D2C0DC0F2004CBFB7 /* ZTableViewNode.swift */,
 				7036E62B2C0DC0E0004CBFB7 /* ZTableViewDelegate.swift */,
 				7036E6292C0DC0D4004CBFB7 /* ZTableViewController.swift */,
+				7036E63B2C0F3932004CBFB7 /* ZTableViewCell.swift */,
 			);
 			path = ZTableView;
 			sourceTree = "<group>";
@@ -323,6 +326,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7036E63D2C0F399D004CBFB7 /* ZTableViewCell.swift in Sources */,
 				7036E62A2C0DC0D4004CBFB7 /* ZTableViewController.swift in Sources */,
 				7036E62C2C0DC0E0004CBFB7 /* ZTableViewDelegate.swift in Sources */,
 				7036E6302C0DC0F9004CBFB7 /* ZTableView.swift in Sources */,

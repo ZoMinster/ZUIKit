@@ -52,15 +52,16 @@ open class ZTableView: UITableView {
     override public init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
         controller.tableView = self
-//        self.register(ZTableViewCell.self, forCellReuseIdentifier: zCellID)
+        self.register(ZTableViewCell.self, forCellReuseIdentifier: zCellID)
     }
     public required init?(coder: NSCoder) {
         super.init(coder: coder)
         controller.tableView = self
-//        self.register(ZTableViewCell.self, forCellReuseIdentifier: zCellID)
+        self.register(ZTableViewCell.self, forCellReuseIdentifier: zCellID)
     }
     open override func awakeFromNib() {
         super.awakeFromNib()
         controller.tableView = self
+        self.register(ZTableViewCell.self, forCellReuseIdentifier: zCellID)
     }
 }

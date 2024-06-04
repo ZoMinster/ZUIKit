@@ -8,6 +8,8 @@
 import UIKit
 import ZUIKit
 
+let cellID = "cell.id.default"
+
 class ViewController: UIViewController, ZTableViewDelegate, UITableViewDataSource, UITableViewDelegate, UITableViewDragDelegate, UITableViewDropDelegate {
     func tableView(_ tableView: UITableView, itemsForBeginning session: any UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         return []
@@ -22,7 +24,8 @@ class ViewController: UIViewController, ZTableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        var cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
+        return cell
     }
     
     
@@ -32,6 +35,8 @@ class ViewController: UIViewController, ZTableViewDelegate, UITableViewDataSourc
         self.view.translatesAutoresizingMaskIntoConstraints = false
         let tableView = ZTableView(frame: CGRectZero, style: .plain)
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.autoSolveDataSource = true
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
         self.view.addSubview(tableView)
         let topC = NSLayoutConstraint(item: tableView, attribute: .top, relatedBy: .equal, toItem: self.view.safeAreaLayoutGuide, attribute: .top, multiplier: 1, constant: 0)
         let bottomC = NSLayoutConstraint(item: tableView, attribute: .bottom, relatedBy: .equal, toItem: self.view.safeAreaLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0)
@@ -41,12 +46,12 @@ class ViewController: UIViewController, ZTableViewDelegate, UITableViewDataSourc
         
         var datas: [CellModel] = []
         for _ in 0...20 {
-            var model = CellModel()
+            let model = CellModel()
             for _ in 0...3 {
-                var m0 = CellModel()
+                let m0 = CellModel()
                 model.children.append(m0)
                 for _ in 0...3 {
-                    var m1 = CellModel()
+                    let m1 = CellModel()
                     m0.children.append(m1)
                 }
             }
