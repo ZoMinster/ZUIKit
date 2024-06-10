@@ -20,6 +20,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
     weak var tableView: ZTableView?
     var hasSectionHeader: Bool = false
     var parentNodeDic = [String:ZTableViewNodeProtocol]()
+    var nodeDic = [String:ZTableViewNodeProtocol]()
     var datas: [ZTableViewNodeProtocol] = [] {
         didSet {
             self.solveDatas()
@@ -118,10 +119,8 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
             }
         }
         
-        
-        
     }
-    
+
     
     // MARK: tableview data source
     internal func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -375,7 +374,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
     @available(iOS 2.0, *)
     internal func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         guard let height = delegate?.tableView?(tableView, heightForHeaderInSection: section) else {
-            return 40
+            return 0
         }
         return height
     }
@@ -383,7 +382,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
     @available(iOS 2.0, *)
     internal func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         guard let height = delegate?.tableView?(tableView, heightForFooterInSection: section) else {
-            return 40
+            return 0
         }
         return height
     }
@@ -391,7 +390,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
     @available(iOS 7.0, *)
     internal func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let height = delegate?.tableView?(tableView, estimatedHeightForRowAt: indexPath) else {
-            return 40
+            return 0
         }
         return height
     }
@@ -399,7 +398,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
     @available(iOS 7.0, *)
     internal func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
         guard let height = delegate?.tableView?(tableView, estimatedHeightForHeaderInSection: section) else {
-            return 40
+            return 0
         }
         return height
     }
@@ -407,7 +406,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
     @available(iOS 7.0, *)
     internal func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
         guard let height = delegate?.tableView?(tableView, estimatedHeightForFooterInSection: section) else {
-            return 40
+            return 0
         }
         return height
     }
@@ -457,6 +456,9 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
 
     @available(iOS 8.0, *)
     internal func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if self.tableView?.autoSelectRow == true {
+            
+        }
         delegate?.tableView?(tableView, didSelectRowAt: indexPath)
     }
 
