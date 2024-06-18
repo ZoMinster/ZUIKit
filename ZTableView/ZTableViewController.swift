@@ -2,7 +2,7 @@
 //  ZTableViewController.swift
 //  ZTableView
 //
-//  Created by 赖依娴 on 2024/5/21.
+//  Created by Minster on 2024/5/21.
 //
 
 import UIKit
@@ -35,7 +35,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
             return
         }
         hasSectionHeader = datas.first!.isSectionHeader
-        var zdatas: [ZTableViewNodeProtocol] = []
+        var zdatas = [ZTableViewNodeProtocol]()
         zdatas += datas
         var firstLevelIndex = 0
         while(!zdatas.isEmpty) {
@@ -52,6 +52,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
             } else {
                 node.depth = parent!.depth + 1
             }
+            nodeDic[node.key] = node
             if node.children.isEmpty {
                 continue
             }
@@ -119,6 +120,17 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
             }
         }
         
+    }
+    
+    func solveDatas(fold: Bool, key: String) -> (addDatas: [ZTableViewNodeProtocol], removeDatas: [ZTableViewNodeProtocol]) {
+        var addDatas = [ZTableViewNodeProtocol]()
+        var removeDatas = [ZTableViewNodeProtocol]()
+        var node :ZTableViewNodeProtocol?  = nodeDic[key]
+        if node == nil {
+            return (addDatas, removeDatas)
+        }
+        
+        return (addDatas, removeDatas)
     }
 
     

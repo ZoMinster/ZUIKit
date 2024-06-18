@@ -25,7 +25,7 @@ class ViewController: UIViewController, ZTableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
         cell.textLabel?.text = self.tableView!.showingDatas[indexPath.section].children[indexPath.row].key
         return cell
     }
