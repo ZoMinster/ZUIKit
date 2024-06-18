@@ -21,30 +21,72 @@ open class ZTableView: UITableView {
             controller.datas = datas
         }
     }
+    open var showingDatas: [ZTableViewNodeProtocol] {
+        get {
+            return controller.showingDatas
+        }
+    }
     open var autoSolveDataSource: Bool = true
+    open var autoSelectRow: Bool = true
     open weak var zDelegate: ZTableViewDelegate? {
-        didSet {
-            controller.zDelegate = self.zDelegate
+        willSet(zDelegate) {
+            controller.zDelegate = zDelegate
         }
     }
     open weak override var delegate: (any UITableViewDelegate)? {
+        willSet(delegate) {
+            if delegate?.isKind(of: ZTableViewController.self) == true {
+                return
+            }
+            controller.delegate = delegate
+        }
         didSet {
-            controller.delegate = self.delegate
+            if self.delegate?.isKind(of: ZTableViewController.self) == true {
+                return
+            }
+            self.delegate = controller
         }
     }
     open weak override var dataSource: (any UITableViewDataSource)? {
+        willSet(dataSource) {
+            if dataSource?.isKind(of: ZTableViewController.self) == true {
+                return
+            }
+            controller.dataSource = dataSource
+        }
         didSet {
-            controller.dataSource = self.dataSource
+            if self.dataSource?.isKind(of: ZTableViewController.self) == true {
+                return
+            }
+            self.dataSource = controller
         }
     }
     open weak override var dragDelegate: (any UITableViewDragDelegate)? {
+        willSet(dragDelegate) {
+            if dragDelegate?.isKind(of: ZTableViewController.self) == true {
+                return
+            }
+            controller.dragDelegate = dragDelegate
+        }
         didSet {
-            controller.dragDelegate = self.dragDelegate
+            if self.dragDelegate?.isKind(of: ZTableViewController.self) == true {
+                return
+            }
+            self.dragDelegate = controller
         }
     }
     open weak override var dropDelegate: (any UITableViewDropDelegate)? {
+        willSet(dropDelegate) {
+            if dropDelegate?.isKind(of: ZTableViewController.self) == true {
+                return
+            }
+            controller.dropDelegate = dropDelegate
+        }
         didSet {
-            controller.dropDelegate = self.dropDelegate
+            if self.dropDelegate?.isKind(of: ZTableViewController.self) == true {
+                return
+            }
+            self.dropDelegate = controller
         }
     }
     
