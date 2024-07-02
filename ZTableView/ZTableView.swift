@@ -106,4 +106,12 @@ open class ZTableView: UITableView {
         controller.tableView = self
         self.register(ZTableViewCell.self, forCellReuseIdentifier: zCellID)
     }
+    
+    open func foldKey(fold: Bool, key: String) {
+        var (optDataDic, optDatas) = controller.solveDatas(fold: fold, key: key)
+        if optDatas.isEmpty {
+            return
+        }
+        for
+    }
 }

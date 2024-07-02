@@ -121,16 +121,56 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
         }
         
     }
+    func solveShowingDataIndexPaths() {
+        
+    }
     
-    func solveDatas(fold: Bool, key: String) -> (addDatas: [ZTableViewNodeProtocol], removeDatas: [ZTableViewNodeProtocol]) {
-        var addDatas = [ZTableViewNodeProtocol]()
-        var removeDatas = [ZTableViewNodeProtocol]()
+    func solveDatas(fold: Bool, key: String) -> (optDataDic: [String:ZTableViewNodeProtocol], optDatas: [ZTableViewNodeProtocol]) {
+        var optDataDic = [String:ZTableViewNodeProtocol]()
+        var optDatas = [ZTableViewNodeProtocol]()
         var node :ZTableViewNodeProtocol?  = nodeDic[key]
         if node == nil {
-            return (addDatas, removeDatas)
+            return (optDataDic, optDatas)
         }
-        
-        return (addDatas, removeDatas)
+        if node!.expanded == !fold {
+            return (optDataDic, optDatas)
+        }
+        node!.expanded = !fold
+        var zdatas = [ZTableViewNodeProtocol]()
+        zdatas.append(node!)
+        while !zdatas.isEmpty {
+            var subNode = zdatas.first!
+            zdatas.removeFirst()
+            if subNode.key != node!.key {
+                optDataDic[subNode.key] = subNode
+                optDatas.append(subNode)
+            }
+            if subNode.expanded == !fold {
+                for subSubNode in subNode.children.reversed() {
+                    zdatas.insert(subSubNode, at: 0)
+                }
+            }
+        }
+        var index = 0
+        for showingNode in self.showingDatas {
+            index += 1
+            if showingNode.key == node!.key {
+                break
+            }
+        }
+        if index <= 0 {
+            return (optDataDic, optDatas)
+        }
+        for subNode in optDatas.reversed() {
+            if !fold {
+                showingDatas.insert(subNode, at: index)
+            } else {
+                if showingDatas.count > index {
+                    showingDatas.remove(at: index)
+                }
+            }
+        }
+        return (optDataDic, optDatas)
     }
 
     
