@@ -86,26 +86,19 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
         } else {
             var tShowingDatas = [ZTableViewNodeProtocol]()
             for section in datas {
-                tShowingDatas.append(section.copy())
+                tShowingDatas.append(section)
             }
             var sectionIndex = 0
             var rowIndex = 0
-            for var section in tShowingDatas {
-                if section.children.isEmpty || !section.expanded {
-                    section.children.removeAll()
-                    showingDatas.append(section.copy())
-                    continue
-                }
+            for section in tShowingDatas {
                 zdatas += section.children
-                var currentSection = section.copy()
-                currentSection.children.removeAll()
-                currentSection.indexPath = IndexPath(row: 0, section: sectionIndex)
+                var currentSection = section
+                currentSection.indexPath = IndexPath(row: -1, section: sectionIndex)
                 rowIndex = 0
                 while(!zdatas.isEmpty) {
                     var node = zdatas.first!
                     zdatas.removeFirst()
                     node.indexPath = IndexPath(row: rowIndex, section: sectionIndex)
-                    currentSection.children.append(node)
                     rowIndex += 1
                     if node.children.isEmpty || !node.expanded {
                         continue
@@ -151,25 +144,49 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
                 }
             }
         }
-        var index = 0
-        for showingNode in self.showingDatas {
-            index += 1
-            if showingNode.key == node!.key {
-                break
+        if !hasSectionHeader {
+            var index = -1
+            for showingNode in self.showingDatas {
+                index += 1
+                if showingNode.key == node!.key {
+                    break
+                }
             }
-        }
-        if index <= 0 {
-            return (optDataDic, optDatas)
-        }
-        for subNode in optDatas.reversed() {
-            if !fold {
-                showingDatas.insert(subNode, at: index)
-            } else {
-                if showingDatas.count > index {
+            if index < 0 {
+                return (optDataDic, optDatas)
+            }
+            for subNode in optDatas.reversed() {
+                if !fold {
+                    showingDatas.insert(subNode, at: index)
+                } else {
                     showingDatas.remove(at: index)
                 }
             }
+        } else {
+            var section = -1
+            var index = -1
+            for showingData in showingDatas {
+                section += 1
+                index = -1
+                for showingChild in showingData.children {
+                    index += 1
+                    if showingChild.key == node!.key {
+                        break
+                    }
+                }
+            }
+            if section < 0 || index < 0 {
+                return (optDataDic, optDatas)
+            }
+            for subNode in optDatas.reversed() {
+                if !fold {
+                    showingDatas[section].children.insert(subNode, at: index)
+                } else {
+                    showingDatas[section].children.remove(at: index)
+                }
+            }
         }
+        
         return (optDataDic, optDatas)
     }
 
