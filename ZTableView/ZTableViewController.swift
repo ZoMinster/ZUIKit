@@ -115,30 +115,56 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
         
     }
     func solveShowingDataIndexPaths() {
-        
+        if hasSectionHeader {
+            var sectionIndex = 0
+            var index = 0
+            for var node in showingDatas {
+                index = 0
+                node.indexPath = IndexPath(row: -1, section: sectionIndex)
+                for var subNode in node.children {
+                    subNode.indexPath = IndexPath(row: index, section: sectionIndex)
+                    index += 1
+                }
+                sectionIndex += 1
+            }
+        } else {
+            let sectionIndex = 0
+            var index = 0
+            for var node in showingDatas {
+                node.indexPath = IndexPath(row: index, section: sectionIndex)
+                index += 1
+            }
+        }
     }
     
-    func solveDatas(fold: Bool, key: String) -> (optDataDic: [String:ZTableViewNodeProtocol], optDatas: [ZTableViewNodeProtocol]) {
+    func solveDatas(expand: Bool, indexPath: IndexPath) -> (optDataDic: [String:ZTableViewNodeProtocol], optDatas: [ZTableViewNodeProtocol], optIndexPaths: [IndexPath]) {
         var optDataDic = [String:ZTableViewNodeProtocol]()
         var optDatas = [ZTableViewNodeProtocol]()
-        var node :ZTableViewNodeProtocol?  = nodeDic[key]
+        var optIndexPaths = [IndexPath]()
+        
+        var node :ZTableViewNodeProtocol?  = nil
+        if self.hasSectionHeader {
+            node = showingDatas[indexPath.section].children[indexPath.row]
+        } else {
+            node = showingDatas[indexPath.row]
+        }
         if node == nil {
-            return (optDataDic, optDatas)
+            return (optDataDic, optDatas, optIndexPaths)
         }
-        if node!.expanded == !fold {
-            return (optDataDic, optDatas)
+        if node!.expanded == expand {
+            return (optDataDic, optDatas, optIndexPaths)
         }
-        node!.expanded = !fold
+        node!.expanded = expand
         var zdatas = [ZTableViewNodeProtocol]()
         zdatas.append(node!)
         while !zdatas.isEmpty {
-            var subNode = zdatas.first!
+            let subNode = zdatas.first!
             zdatas.removeFirst()
             if subNode.key != node!.key {
                 optDataDic[subNode.key] = subNode
                 optDatas.append(subNode)
             }
-            if subNode.expanded == !fold {
+            if subNode.expanded == expand {
                 for subSubNode in subNode.children.reversed() {
                     zdatas.insert(subSubNode, at: 0)
                 }
@@ -153,14 +179,20 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
                 }
             }
             if index < 0 {
-                return (optDataDic, optDatas)
+                return (optDataDic, optDatas, optIndexPaths)
             }
+            index += 1
             for subNode in optDatas.reversed() {
-                if !fold {
+                if expand {
                     showingDatas.insert(subNode, at: index)
                 } else {
                     showingDatas.remove(at: index)
                 }
+            }
+            for _ in optDatas {
+                let section = node!.indexPath.section
+                optIndexPaths.append(IndexPath(row: index, section: section))
+                index += 1
             }
         } else {
             var section = -1
@@ -176,25 +208,38 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
                 }
             }
             if section < 0 || index < 0 {
-                return (optDataDic, optDatas)
+                return (optDataDic, optDatas, optIndexPaths)
             }
+            index += 1
             for subNode in optDatas.reversed() {
-                if !fold {
+                if expand {
                     showingDatas[section].children.insert(subNode, at: index)
                 } else {
                     showingDatas[section].children.remove(at: index)
                 }
             }
+            for _ in optDatas {
+                optIndexPaths.append(IndexPath(row: index, section: section))
+                index += 1
+            }
         }
-        
-        return (optDataDic, optDatas)
+        solveShowingDataIndexPaths()
+        return (optDataDic, optDatas, optIndexPaths)
     }
 
     
     // MARK: tableview data source
     internal func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (self.tableView!.autoSolveDataSource) {
-            return showingDatas[section].children.count
+            if self.hasSectionHeader {
+                if !showingDatas[section].expanded {
+                    return 0
+                }
+                return showingDatas[section].children.count
+            } else {
+                return showingDatas.count
+            }
+            
         }
         guard let rows = dataSource?.tableView(tableView, numberOfRowsInSection: section) else {
             return 0
@@ -219,7 +264,12 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
     internal func numberOfSections(in tableView: UITableView) -> Int {
         // Default is 1 if not implemented
         if (self.tableView!.autoSolveDataSource) {
-            return showingDatas.count
+            if hasSectionHeader {
+                return showingDatas.count
+            } else {
+                return 1
+            }
+            
         }
         guard let sections = dataSource?.numberOfSections?(in: tableView) else {
             return 1
@@ -515,12 +565,18 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
 
     @available(iOS 8.0, *)
     internal func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        return delegate?.tableView?(tableView, willSelectRowAt: indexPath)
+        guard let indexPath_ = delegate?.tableView?(tableView, willSelectRowAt: indexPath) else {
+            return indexPath
+        }
+        return indexPath_
     }
 
     @available(iOS 3.0, *)
     internal func tableView(_ tableView: UITableView, willDeselectRowAt indexPath: IndexPath) -> IndexPath? {
-        return delegate?.tableView?(tableView, willDeselectRowAt: indexPath)
+        guard let indexPath_ = delegate?.tableView?(tableView, willDeselectRowAt: indexPath) else {
+            return indexPath
+        }
+        return indexPath_
     }
 
     @available(iOS 8.0, *)

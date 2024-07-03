@@ -14,7 +14,7 @@ open class ZTableView: UITableView {
         case multiple
         case single
     }
-    open var expansionAnimation: UITableView.RowAnimation = .top
+    open var expansionAnimation: UITableView.RowAnimation = .automatic
     open var expansionType: ZTableViewExpansionType = .multiple
     open var datas: [ZTableViewNodeProtocol] = [] {
         didSet {
@@ -106,12 +106,29 @@ open class ZTableView: UITableView {
         controller.tableView = self
         self.register(ZTableViewCell.self, forCellReuseIdentifier: zCellID)
     }
-    
-    open func foldKey(fold: Bool, key: String) {
-        var (optDataDic, optDatas) = controller.solveDatas(fold: fold, key: key)
-        if optDatas.isEmpty {
+    open func toggle(indexPath: IndexPath) {
+        var expand = false
+        if self.controller.hasSectionHeader {
+            let node = self.showingDatas[indexPath.section].children[indexPath.row]
+            expand = !node.expanded
+        } else {
+            let node = self.showingDatas[indexPath.row]
+            expand = !node.expanded
+        }
+        self.expand(expand: expand, indexPath: indexPath)
+    }
+    open func expand(expand: Bool, indexPath: IndexPath) {
+        self.beginUpdates()
+        let (_, _, optIndexPaths) = self.controller.solveDatas(expand: expand, indexPath: indexPath)
+        if optIndexPaths.isEmpty {
             return
         }
-        for
+        if expand {
+            self.insertRows(at: optIndexPaths, with: self.expansionAnimation)
+        } else {
+            self.deleteRows(at: optIndexPaths, with: self.expansionAnimation)
+        }
+        self.reloadData()
+        self.endUpdates()
     }
 }

@@ -26,8 +26,17 @@ class ViewController: UIViewController, ZTableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
-        cell.textLabel?.text = self.tableView!.showingDatas[indexPath.section].children[indexPath.row].key
+        cell.selectionStyle = .default
+        cell.textLabel?.text = self.tableView!.showingDatas[indexPath.row].key
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.tableView?.toggle(indexPath: indexPath)
+        self.tableView?.deselectRow(at: indexPath, animated: true)
+    }
+    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        return true
     }
     
     
@@ -38,9 +47,12 @@ class ViewController: UIViewController, ZTableViewDelegate, UITableViewDataSourc
         let tableView = ZTableView(frame: CGRectZero, style: .insetGrouped)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.autoSolveDataSource = true
+        tableView.allowsSelection = true
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
         self.view.addSubview(tableView)
         self.tableView = tableView
+        
+        
         let topC = NSLayoutConstraint(item: tableView, attribute: .top, relatedBy: .equal, toItem: self.view.safeAreaLayoutGuide, attribute: .top, multiplier: 1, constant: 0)
         let bottomC = NSLayoutConstraint(item: tableView, attribute: .bottom, relatedBy: .equal, toItem: self.view.safeAreaLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0)
         let leftC = NSLayoutConstraint(item: tableView, attribute: .leading, relatedBy: .equal, toItem: self.view.safeAreaLayoutGuide, attribute: .leading, multiplier: 1, constant: 0)
