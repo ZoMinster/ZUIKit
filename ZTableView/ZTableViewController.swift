@@ -164,7 +164,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
                 optDataDic[subNode.key] = subNode
                 optDatas.append(subNode)
             }
-            if subNode.expanded == expand {
+            if (subNode.key == node!.key && subNode.expanded == expand) || (subNode.key != node!.key && subNode.expanded == true) {
                 for subSubNode in subNode.children.reversed() {
                     zdatas.insert(subSubNode, at: 0)
                 }

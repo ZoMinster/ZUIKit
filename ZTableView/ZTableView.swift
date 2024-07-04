@@ -14,8 +14,9 @@ open class ZTableView: UITableView {
         case multiple
         case single
     }
-    open var expansionAnimation: UITableView.RowAnimation = .automatic
+    open var expansionAnimation: UITableView.RowAnimation = .top
     open var expansionType: ZTableViewExpansionType = .multiple
+    open var isExpanding: Bool = false
     open var datas: [ZTableViewNodeProtocol] = [] {
         didSet {
             controller.datas = datas
@@ -90,20 +91,31 @@ open class ZTableView: UITableView {
         }
     }
     
+    func compatible() {
+        if #available(iOS 11.0, *) {
+            self.estimatedRowHeight = 0;
+            self.estimatedSectionHeaderHeight = 0;
+            self.estimatedSectionFooterHeight = 0;
+        }
+    }
+    
     internal var controller: ZTableViewController = ZTableViewController()
     override public init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
         controller.tableView = self
+        compatible()
         self.register(ZTableViewCell.self, forCellReuseIdentifier: zCellID)
     }
     public required init?(coder: NSCoder) {
         super.init(coder: coder)
         controller.tableView = self
+        compatible()
         self.register(ZTableViewCell.self, forCellReuseIdentifier: zCellID)
     }
     open override func awakeFromNib() {
         super.awakeFromNib()
         controller.tableView = self
+        compatible()
         self.register(ZTableViewCell.self, forCellReuseIdentifier: zCellID)
     }
     open func toggle(indexPath: IndexPath) {
@@ -118,17 +130,35 @@ open class ZTableView: UITableView {
         self.expand(expand: expand, indexPath: indexPath)
     }
     open func expand(expand: Bool, indexPath: IndexPath) {
-        self.beginUpdates()
+//        if self.isExpanding {
+//            return
+//        }
         let (_, _, optIndexPaths) = self.controller.solveDatas(expand: expand, indexPath: indexPath)
         if optIndexPaths.isEmpty {
             return
         }
-        if expand {
-            self.insertRows(at: optIndexPaths, with: self.expansionAnimation)
-        } else {
-            self.deleteRows(at: optIndexPaths, with: self.expansionAnimation)
+//        let orgContentOffset = self.contentOffset
+        DispatchQueue.main.async {
+//            self.performBatchUpdates {
+//                if expand {
+//                    self.insertRows(at: optIndexPaths, with: self.expansionAnimation)
+//                } else {
+//                    self.deleteRows(at: optIndexPaths, with: .none)
+//                }
+//            }
+//            self.setContentOffset(orgContentOffset, animated: false)
+            self.reloadData()
         }
-        self.reloadData()
-        self.endUpdates()
+//        self.isExpanding = true
+//        self.performBatchUpdates {
+//            
+//            _ = self.cellForRow(at: indexPath)
+//        } completion: { isFinished in
+//            self.isExpanding = false
+//            print(isFinished)
+//        }
+
+        
+//        self.reloadData()
     }
 }
