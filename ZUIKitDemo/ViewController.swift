@@ -24,8 +24,16 @@ class ViewController: UIViewController, ZTableViewDelegate, UITableViewDataSourc
         return 0
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        cell.alpha = 0
+//        UIView.animate(withDuration: 0.5, delay: 0.05*Double(indexPath.row), animations: {
+//            cell.alpha = 1
+//        })
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
+        cell.backgroundView = UIView()
         cell.selectionStyle = .default
         cell.textLabel?.text = self.tableView!.showingDatas[indexPath.row].key
         return cell
@@ -44,7 +52,10 @@ class ViewController: UIViewController, ZTableViewDelegate, UITableViewDataSourc
         super.viewDidLoad()
             // Do any additional setup after loading the view.
         self.view.translatesAutoresizingMaskIntoConstraints = false
-        let tableView = ZTableView(frame: CGRectZero, style: .insetGrouped)
+        let tableView = ZTableView(frame: CGRectZero, style: .grouped)
+        tableView.estimatedRowHeight = 0
+        tableView.estimatedSectionHeaderHeight = 0
+        tableView.estimatedSectionFooterHeight = 0
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.autoSolveDataSource = true
         tableView.allowsSelection = true
