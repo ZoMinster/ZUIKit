@@ -15,7 +15,7 @@ open class ZTableView: UITableView {
         case single
     }
     open var addAnimation: UITableView.RowAnimation = .top
-    open var removeAnimation: UITableView.RowAnimation = .top
+    open var removeAnimation: UITableView.RowAnimation = .bottom
     open var expansionType: ZTableViewExpansionType = .multiple
     open var isExpanding: Bool = false
     open var datas: [ZTableViewNodeProtocol] = [] {
@@ -135,7 +135,20 @@ open class ZTableView: UITableView {
         if optIndexPaths.isEmpty {
             return
         }
-        self.reloadData()
+//        self.beginUpdates()
+//
+//        self.endUpdates()
+        self.performBatchUpdates {
+            if expand {
+                self.insertRows(at: optIndexPaths, with: self.addAnimation)
+            } else {
+                self.deleteRows(at: optIndexPaths, with: self.removeAnimation)
+            }
+        } completion: { comptetion in
+            
+        }
+
+//        self.reloadData()
 //        let oldContentHeight: CGFloat = self.contentSize.height
 //        let oldOffsetY: CGFloat = self.contentOffset.y
 //        self.performBatchUpdates {

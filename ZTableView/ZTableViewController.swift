@@ -330,7 +330,8 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
     internal func sectionIndexTitles(for tableView: UITableView) -> [String]? {
         // return list of section titles to display in section index view (e.g. "ABCD...Z#")
         guard let titles = dataSource?.sectionIndexTitles?(for: tableView) else {
-            return showingDatas.map({$0.key})
+            return nil
+//            return showingDatas.map({$0.key})
         }
         return titles
     }
