@@ -10,7 +10,9 @@ import UIKit
 internal let zCellID = "z.cell.id.default"
 
 
-internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDelegate, UITableViewDragDelegate, UITableViewDropDelegate, UITableViewDataSource {
+internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDelegate, UITableViewDataSource
+                                        , UITableViewDragDelegate, UITableViewDropDelegate
+{
     
     weak var zDelegate: ZTableViewDelegate?
     weak var delegate: (any UITableViewDelegate)?
@@ -294,7 +296,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
     @available(iOS 2.0, *)
     internal func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         guard let title = dataSource?.tableView?(tableView, titleForFooterInSection: section) else {
-            return showingDatas[section].footerTitle
+            return nil
         }
         return title
     }
@@ -306,7 +308,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
     @available(iOS 8.0, *)
     internal func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         guard let flag = dataSource?.tableView?(tableView, canEditRowAt: indexPath) else {
-            return false
+            return true
         }
         return flag
     }
@@ -318,7 +320,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
     @available(iOS 8.0, *)
     internal func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         guard let flag = dataSource?.tableView?(tableView, canMoveRowAt: indexPath) else {
-            return false
+            return true
         }
         return flag
     }
@@ -434,7 +436,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
     @available(iOS 2.0, *)
     internal func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
         guard let flag = delegate?.scrollViewShouldScrollToTop?(scrollView) else {
-            return false
+            return true
         }
         return flag
     }
@@ -510,7 +512,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
     @available(iOS 7.0, *)
     internal func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let height = delegate?.tableView?(tableView, estimatedHeightForRowAt: indexPath) else {
-            return 0
+            return self.tableView(tableView, heightForRowAt: indexPath)
         }
         return height
     }
@@ -518,7 +520,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
     @available(iOS 7.0, *)
     internal func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
         guard let height = delegate?.tableView?(tableView, estimatedHeightForHeaderInSection: section) else {
-            return 0
+            return self.tableView(tableView, heightForHeaderInSection: section)
         }
         return height
     }
@@ -526,7 +528,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
     @available(iOS 7.0, *)
     internal func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
         guard let height = delegate?.tableView?(tableView, estimatedHeightForFooterInSection: section) else {
-            return 0
+            return self.tableView(tableView, heightForFooterInSection: section)
         }
         return height
     }
@@ -549,7 +551,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
     @available(iOS 6.0, *)
     internal func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         guard let flag = delegate?.tableView?(tableView, shouldHighlightRowAt: indexPath) else {
-            return false
+            return true
         }
         return flag
     }
@@ -606,7 +608,12 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
     @available(iOS 16.0, *)
     internal func tableView(_ tableView: UITableView, canPerformPrimaryActionForRowAt indexPath: IndexPath) -> Bool {
         guard let flag = delegate?.tableView?(tableView, canPerformPrimaryActionForRowAt: indexPath) else {
-            return false
+            if tableView.isEditing {
+                return true
+            } else {
+                return false
+            }
+            
         }
         return flag
     }
@@ -695,7 +702,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
     @available(iOS, introduced: 5.0, deprecated: 13.0)
     internal func tableView(_ tableView: UITableView, shouldShowMenuForRowAt indexPath: IndexPath) -> Bool {
         guard let flag = delegate?.tableView?(tableView, shouldShowMenuForRowAt: indexPath) else {
-            return false
+            return true
         }
         return flag
     }
@@ -703,7 +710,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
     @available(iOS, introduced: 5.0, deprecated: 13.0)
     internal func tableView(_ tableView: UITableView, canPerformAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
         guard let flag = delegate?.tableView?(tableView, canPerformAction: action, forRowAt: indexPath, withSender: sender) else {
-            return false
+            return true
         }
         return flag
     }
@@ -716,7 +723,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
     @available(iOS 9.0, *)
     internal func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
         guard let flag = delegate?.tableView?(tableView, canFocusRowAt: indexPath) else {
-            return false
+            return true
         }
         return flag
     }
@@ -724,7 +731,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
     @available(iOS 9.0, *)
     internal func tableView(_ tableView: UITableView, shouldUpdateFocusIn context: UITableViewFocusUpdateContext) -> Bool {
         guard let flag = delegate?.tableView?(tableView, shouldUpdateFocusIn: context) else {
-            return false
+            return true
         }
         return flag
     }
@@ -752,7 +759,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
     @available(iOS 11.0, *)
     internal func tableView(_ tableView: UITableView, shouldSpringLoadRowAt indexPath: IndexPath, with context: any UISpringLoadedInteractionContext) -> Bool {
         guard let flag = delegate?.tableView?(tableView, shouldSpringLoadRowAt: indexPath, with: context) else {
-            return false
+            return true
         }
         return flag
     }
@@ -760,7 +767,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
     @available(iOS 13.0, *)
     internal func tableView(_ tableView: UITableView, shouldBeginMultipleSelectionInteractionAt indexPath: IndexPath) -> Bool {
         guard let flag = delegate?.tableView?(tableView, shouldBeginMultipleSelectionInteractionAt: indexPath) else {
-            return false
+            return true
         }
         return flag
     }
@@ -851,6 +858,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
         delegate?.tableView?(tableView, willEndContextMenuInteraction: configuration, animator: animator)
     }
     
+    // drag delegate
     // Provide items to begin a drag associated with a given index path.
     // You can use -[session locationInView:] to do additional hit testing if desired.
     // If an empty array is returned a drag session will not begin.
@@ -914,6 +922,7 @@ internal class ZTableViewController: NSObject, ZTableViewDelegate, UITableViewDe
         return flag
     }
     
+    // drop deltegate
     // Called when the user initiates the drop.
     // Use the drop coordinator to access the items in the drop and the final destination index path and proposal for the drop,
     // as well as specify how you wish to animate each item to its final position.

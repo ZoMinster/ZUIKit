@@ -136,8 +136,13 @@ open class ZTableView: UITableView {
             return
         }
 //        self.beginUpdates()
-//
+//        if expand {
+//            self.insertRows(at: optIndexPaths, with: self.addAnimation)
+//        } else {
+//            self.deleteRows(at: optIndexPaths, with: self.removeAnimation)
+//        }
 //        self.endUpdates()
+//        CATransaction.begin()
         self.performBatchUpdates {
             if expand {
                 self.insertRows(at: optIndexPaths, with: self.addAnimation)
@@ -145,7 +150,7 @@ open class ZTableView: UITableView {
                 self.deleteRows(at: optIndexPaths, with: self.removeAnimation)
             }
         } completion: { comptetion in
-            
+//            CATransaction.commit()
         }
 
 //        self.reloadData()

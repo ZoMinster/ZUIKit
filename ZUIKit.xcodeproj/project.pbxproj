@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		70164E7C2C50F90500248BF9 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70164E7B2C50F8FA00248BF9 /* TestViewController.swift */; };
 		7036E5FA2C0DBEED004CBFB7 /* ZUIKit.docc in Sources */ = {isa = PBXBuildFile; fileRef = 7036E5F92C0DBEED004CBFB7 /* ZUIKit.docc */; };
 		7036E6002C0DBEED004CBFB7 /* ZUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7036E5F52C0DBEED004CBFB7 /* ZUIKit.framework */; };
 		7036E6052C0DBEED004CBFB7 /* ZUIKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7036E6042C0DBEED004CBFB7 /* ZUIKitTests.swift */; };
@@ -60,6 +61,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		70164E7B2C50F8FA00248BF9 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		7036E5F52C0DBEED004CBFB7 /* ZUIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZUIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7036E5F82C0DBEED004CBFB7 /* ZUIKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZUIKit.h; sourceTree = "<group>"; };
 		7036E5F92C0DBEED004CBFB7 /* ZUIKit.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = ZUIKit.docc; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 		7036E6142C0DBF89004CBFB7 /* ZUIKitDemo */ = {
 			isa = PBXGroup;
 			children = (
+				70164E7B2C50F8FA00248BF9 /* TestViewController.swift */,
 				7036E6152C0DBF89004CBFB7 /* AppDelegate.swift */,
 				7036E6172C0DBF89004CBFB7 /* SceneDelegate.swift */,
 				7036E6192C0DBF89004CBFB7 /* ViewController.swift */,
@@ -347,6 +350,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70164E7C2C50F90500248BF9 /* TestViewController.swift in Sources */,
 				7036E61A2C0DBF89004CBFB7 /* ViewController.swift in Sources */,
 				7036E6162C0DBF89004CBFB7 /* AppDelegate.swift in Sources */,
 				7036E6182C0DBF89004CBFB7 /* SceneDelegate.swift in Sources */,
